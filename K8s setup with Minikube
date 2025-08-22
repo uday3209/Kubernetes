@@ -1,0 +1,12 @@
+  step-1: Install kubectl binary
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+  step-2: Make it executable
+chmod +x kubectl
+  step-3: Mv it to bin
+mv ./kubectl ~/.local/bin/kubectl
+  step-4: Check version
+kubectl version --client
+
+SETUP MINIKUBE
+curl -LO https://github.com/kubernetes/minikube/releases/latest/download/minikube-linux-amd64
+sudo install minikube-linux-amd64 /usr/local/bin/minikube && rm minikube-linux-amd64
