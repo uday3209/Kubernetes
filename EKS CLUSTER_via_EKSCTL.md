@@ -1,23 +1,37 @@
 Host EKS CLUSTER via EKSCTL
 #################################################################################################################
- create iam role and attach policy
+## create IAM role and attach policy
  ECRfull access,EKSpolicy and IAM full access
  apt-get update -y
  apt install unzip -y
+
+ ## Install AWS CLI and configure with IAM user Credentials
+```
  curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
  unzip awscliv2.zip
  sudo ./aws/install
  aws configure
- Install EKS Tool
+```
+ 
+ ## Install EKS Tool
+```
  curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
  sudo mv /tmp/eksctl /usr/local/bin
  eksctl version
- Install Kubectl
+```
+
+ ## Install Kubectl
  curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
  sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl 
  kubectl version --client
+ 
  SSh-keygen
- Create EKS Cluster
+ 
+ ## Create EKS Cluster
+ ```
+ eksctl create cluster --name milestone-2 --region us-east-1 --version 1.32 --node-type t2.small --nodes 3 --nodes-min 2 --nodes-max 4 --ssh-access --ssh-public-key /root/.ssh/id_rsa.pub
+```
+
  eksctl create cluster --name my-cluster --region region-code --version 1.32 --vpc-public-subnets subnet-ExampleID1,subnet-ExampleID2 --without-nodegroup
 ##############################################################################################################################
  ##Create a Node Group##
@@ -37,9 +51,6 @@ Host EKS CLUSTER via EKSCTL
 
 or you can make cluster in this way
 ################################################################################################################################
- eksctl create cluster --name milestone-2 --region us-east-1 --version 1.32 --node-type t2.small --nodes 3 --nodes-min 2 --nodes-max 4 --ssh-access --ssh-public-key /root/.ssh/id_rsa.pub
-
-
 
 
  When You want to delete cluster
