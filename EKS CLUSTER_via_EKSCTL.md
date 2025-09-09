@@ -5,6 +5,12 @@
  IAM full access
 
  ## Install AWS CLI and configure with IAM user Credentials
+
+ ##### Note: If ubuntu os
+```
+  apt update
+  apt install unzip
+```
 ```
  curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
  unzip awscliv2.zip
@@ -34,7 +40,7 @@
  ## Create EKS Cluster ( Edit Your custom Cluster Name )
   ### Method-1
  ```
- eksctl create cluster --name my-cluster --region us-east-1 --version 1.32 --node-type t2.small --nodes 3 --nodes-min 2 --nodes-max 4 --ssh-access --ssh-public-key /root/.ssh/id_rsa.pub
+ eksctl create cluster --name my-cluster --region us-east-1 --version 1.32 --node-type t2.micro --nodes 3 --nodes-min 2 --nodes-max 4 --ssh-access --ssh-public-key /root/.ssh/id_rsa.pub
 ```
  ### Method-2
  ```
@@ -45,7 +51,7 @@
   --region us-east-2 \
   --name my-node-group \
   --node-ami-family Ubuntu2204 \
-  --node-type t2.small \
+  --node-type t2.micro \
   --subnet-ids subnet-086ced1a84c94a342,subnet-01695faa5e0e61d97 \
   --nodes 3 \
   --nodes-min 2 \
