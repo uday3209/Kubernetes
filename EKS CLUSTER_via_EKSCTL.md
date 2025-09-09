@@ -1,9 +1,8 @@
-Host EKS CLUSTER via EKSCTL
-#################################################################################################################
-## create IAM role and attach policy
- ECRfull access,EKSpolicy and IAM full access
- apt-get update -y
- apt install unzip -y
+# Steps to Host EKS CLUSTER via EKSCTL 
+## <br> Create IAM role/user and attach following policies
+ ECRfull access <br>
+ EKSpolicy <br>
+ IAM full access
 
  ## Install AWS CLI and configure with IAM user Credentials
 ```
@@ -21,21 +20,26 @@ Host EKS CLUSTER via EKSCTL
 ```
 
  ## Install Kubectl
+ ```
  curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
  sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl 
  kubectl version --client
- 
- SSh-keygen
- 
- ## Create EKS Cluster
  ```
- eksctl create cluster --name milestone-2 --region us-east-1 --version 1.32 --node-type t2.small --nodes 3 --nodes-min 2 --nodes-max 4 --ssh-access --ssh-public-key /root/.ssh/id_rsa.pub
-```
 
+### Generate keys fir cluster creation
+ ```
+ ssh-keygen
+ ```
+ 
+ ## Create EKS Cluster ( Edit Your custom Cluster Name )
+  ### Method-1
+ ```
+ eksctl create cluster --name my-cluster --region us-east-1 --version 1.32 --node-type t2.small --nodes 3 --nodes-min 2 --nodes-max 4 --ssh-access --ssh-public-key /root/.ssh/id_rsa.pub
+```
+ ### Method-2
+ ```
  eksctl create cluster --name my-cluster --region region-code --version 1.32 --vpc-public-subnets subnet-ExampleID1,subnet-ExampleID2 --without-nodegroup
-##############################################################################################################################
- ##Create a Node Group##
-##############################################################################################################################
+
  eksctl create nodegroup \
   --cluster my-cluster \
   --region us-east-2 \
@@ -48,18 +52,18 @@ Host EKS CLUSTER via EKSCTL
   --nodes-max 4 \
   --ssh-access \
   --ssh-public-key /root/.ssh/id_rsa.pub
-
-or you can make cluster in this way
-################################################################################################################################
+```
 
 
- When You want to delete cluster
+ ### To Delete cluster
+```
  eksctl delete cluster --name my-cluster
+```
 
 
 
-
-DEPLOYMENT
+#### deployment.yaml
+```
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -81,9 +85,10 @@ spec:
         image: nginx:1.14.2
         ports:
         - containerPort: 80
+```
 
-###################################################################################
-SERVICE
+#### service.yaml
+```
 apiVersion: v1
 kind: Service
 metadata:
@@ -96,7 +101,4 @@ spec:
       port: 80
       targetPort: 80
   type: LoadBalancer
-##################################################################################### CLUSTER CREATION
-eksctl create cluster --name prumile-cluster --region us-east-1 --nodegroup-name prumile-nodes --node-type t2.small --nodes 3 --nodes-min 2 --nodes-max 4 --ssh-access --ssh-public-key .ssh/id_rsa.pub
-##################################################################################### CLUSTER DELETION
-eksctl delete cluster --name my-cluster
+```
