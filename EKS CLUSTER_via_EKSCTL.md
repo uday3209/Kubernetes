@@ -40,7 +40,7 @@
  ## Create EKS Cluster ( Edit Your custom Cluster Name )
   ### Method-1
  ```
- eksctl create cluster --name my-cluster --region us-east-1 --version 1.32 --node-type t2.micro --nodes 3 --nodes-min 2 --nodes-max 4 --ssh-access --ssh-public-key /root/.ssh/id_rsa.pub
+ eksctl create cluster --name my-cluster --region us-east-1 --version 1.32 --node-type t2.small --nodes 4 --nodes-min 3 --nodes-max 5 --ssh-access --ssh-public-key /root/.ssh/id_rsa.pub
 ```
  ### Method-2
  ```
@@ -48,14 +48,14 @@
 
  eksctl create nodegroup \
   --cluster my-cluster \
-  --region us-east-2 \
+  --region us-east-1 \
   --name my-node-group \
   --node-ami-family Ubuntu2204 \
-  --node-type t2.micro \
+  --node-type t2.small \
   --subnet-ids subnet-086ced1a84c94a342,subnet-01695faa5e0e61d97 \
-  --nodes 3 \
-  --nodes-min 2 \
-  --nodes-max 4 \
+  --nodes 4 \
+  --nodes-min 3 \
+  --nodes-max 5 \
   --ssh-access \
   --ssh-public-key /root/.ssh/id_rsa.pub
 ```
